@@ -1,0 +1,23 @@
+{
+  "name": "IWantMyRare",
+  "version": "0.0.1",
+  "description": "Website to help players find WoW rare adds",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+  },
+  "engines": {
+    "node": "0.10.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brunabxs/IWantMyRare"
+  },
+  "keywords": [
+    "node",
+    "heroku"
+  ],
+  "license": "GPLv2"
+}
