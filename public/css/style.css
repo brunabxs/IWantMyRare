@@ -1,1 +1,91 @@
+* {
+  padding: 0;
+  margin: 0;
+}
 
+html {
+  font-family: Arial, Helvetica, sans;
+}
+
+body {
+  width: 940px;
+  margin: 10px auto;
+  background-color: #2b1507;
+}
+
+a {
+  text-decoration: none;
+}
+
+h1 {
+  color: #F3F3F3;
+  font-size: 4em;
+  font-weight: normal;
+  font-family: Georgia, Times, sans-serif;
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: #F3F3F3;
+  font-size: 2em;
+  font-weight: normal;
+  font-family: Georgia, Times, sans-serif;
+  margin-bottom: 20px;
+  position: absolute;
+  bottom: 0;
+}
+
+p {
+  color: #F3F3F3;
+  font-style: italic;
+  width: 500px;
+  font-family: Georgia, Times, sans-serif;
+}
+
+#wrapper {
+  float: left;
+  height: 300px;
+  position: relative;
+}
+
+img {
+  float: right;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #33190B;
+}
+
+table td {
+  padding: 10px;
+}
+table td, table td a {
+  color: #ebdba2;
+}
+
+table thead td {
+  font-weight: bold;
+  color: #F5EBD1;
+  background: #4d1a08 url('table-header.gif') 0 100% repeat-x;
+  border-bottom: 1px solid #1a0f08;
+}
+
+table tbody tr:nth-child(odd) { background-color: #2b1507; border-top: 1px solid #31190a }
+table tbody tr:nth-child(even) { background-color: #231207; border-top: 1px solid #30190b }
+
+.edit {
+  width: 16px;
+  height: 16px;
+  display: block;
+  background-image: url('edit.png');
+}
+
+table td a:not(.edit):hover {
+  border-bottom: 1px dotted #ebdba2
+}
+
+h2 a:hover {
+  border-bottom: 1px dotted #F3F3F3
+}
