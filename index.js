@@ -95,9 +95,10 @@ server.get('/rares', function (req, res, next) {
 });
 
 server.get(/.*/, restify.serveStatic({
-  directory: './public'
+  directory: './public',
+  default: 'index.html'
 }));
 
-server.listen(PORT, function() {
+server.listen(PORT, '127.0.0.1', function() {
   console.log('%s listening at %s', server.name, server.url);
 });
