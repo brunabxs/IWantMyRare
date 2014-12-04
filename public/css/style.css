@@ -34,6 +34,9 @@ h2 {
   position: absolute;
   bottom: 0;
 }
+h2, h2 a {
+  color: #F3F3F3;
+}
 
 p {
   color: #F3F3F3;
@@ -83,9 +86,9 @@ table tbody tr:nth-child(even) { background-color: #231207; border-top: 1px soli
 }
 
 table td a:not(.edit):hover {
-  border-bottom: 1px dotted #ebdba2
+  border-bottom: 1px dotted #ebdba2;
 }
 
 h2 a:hover {
-  border-bottom: 1px dotted #F3F3F3
+  border-bottom: 1px dotted #F3F3F3;
 }

@@ -11,9 +11,15 @@ var numberFormat = function(number) {
   return number > 10 ? number : '0'+number;
 };
 
+var updateServers = function() {
+  jQuery('#server option').remove();
 
-jQuery(document).ready(function() {
-  jQuery.get('/rares/Goldrinn')
+  jQuery('#server').append('<option>Goldrinn</option>');
+  jQuery('#server').append('<option>Azralon</option>');
+};
+
+var updateRaresTable = function(server, callback) {
+  jQuery.get('/rares/' + server)
   .done(function(data) {
     jQuery('tbody tr').remove();
 
@@ -31,5 +37,32 @@ jQuery(document).ready(function() {
       }
       jQuery('tbody').append(row);
     });
+
+    jQuery('h2 a').text(server);
+    
+    callback();
+  });
+};
+
+jQuery(document).ready(function() {
+  updateServers();
+
+  jQuery('h2 a').click(function() {
+    jQuery('#server-dialog').dialog('open');
+  });
+
+  jQuery('#server-dialog').dialog({
+    autoOpen: true,
+    height: 200,
+    width: 600,
+    modal: true,
+    closeOnEscape: false,
+    buttons: {
+      'Confirmar': function() {
+        updateRaresTable(jQuery('#server').val(), function() {
+          jQuery('#server-dialog').dialog('close');
+        });
+      }
+    }
   });
 });
