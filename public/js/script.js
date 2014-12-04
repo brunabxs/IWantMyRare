@@ -21,7 +21,7 @@ var updateServers = function() {
 var updateRaresTable = function(server, callback) {
   jQuery.get('/rares/' + server)
   .done(function(data) {
-    jQuery('tbody tr').remove();
+    jQuery('table#rares tbody tr').remove();
 
     jQuery.each(data.rares, function(index, rare) {
       var row = jQuery('<tr></tr>');
@@ -35,10 +35,10 @@ var updateRaresTable = function(server, callback) {
       } else {
         row.append('<td>-</td>');
       }
-      jQuery('tbody').append(row);
+      jQuery('table#rares tbody').append(row);
     });
 
-    jQuery('h2 a').text(server);
+    jQuery('#server-name a').text(server);
     
     callback();
   });
@@ -46,8 +46,10 @@ var updateRaresTable = function(server, callback) {
 
 jQuery(document).ready(function() {
   updateServers();
+  
+  jQuery('#server-name, #rares').hide();
 
-  jQuery('h2 a').click(function() {
+  jQuery('#server-name a').click(function() {
     jQuery('#server-dialog').dialog('open');
   });
 
@@ -61,6 +63,7 @@ jQuery(document).ready(function() {
       'Confirmar': function() {
         updateRaresTable(jQuery('#server').val(), function() {
           jQuery('#server-dialog').dialog('close');
+          jQuery('#server-name, #rares').show();
         });
       }
     }
