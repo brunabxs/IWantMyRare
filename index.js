@@ -6,27 +6,35 @@ var server = restify.createServer();
 server.use(restify.fullResponse());
 server.use(restify.bodyParser());
 
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/test');
+
+var Server = mongoose.model('Server', mongoose.Schema({ name: String }));
+var Rare = mongoose.model('Rare', mongoose.Schema({ name: String, link: String, respawn: {min: Number, max: Number} }));
+var RareDeath = mongoose.model('RareDeath', mongoose.Schema({ server: String, rare: String, date: Date }));
+
 server.get('/rares/:server', function (req, res, next) {
-  res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
-  res.end(JSON.stringify({server:req.params.server, 
-                          rares:[
-                            {
-                              name     :'Nakk',
-                              link     :'http://www.wowhead.com/npc=50990',
-                              location :{ region:'Nagrand', coords:[[77,44], [22,20]] },
-                              deaths   :[ '2014-03-12 00:00', '2014-03-12 00:00' ],
-                              respawn  :{ min:'10', max:'23' }
-                            },
-                            {
-                              name     :'Luk\'Hok',
-                              link     :'http://www.wowhead.com/npc=50981',
-                              location :{ region: 'Nagrand', coords: [[33,22], [11,5]] },
-                              deaths   :[ '2014-03-12 01:00', '2014-03-12 01:01' ],
-                              respawn  :{ min:'8', max:'12' }
-                            }
-                          ]}
-                        ));
-  return next();
+  Rare.find({}, function(err, rares) {
+    var raresMap = {};
+    rares.forEach(function(rare) {
+      raresMap[rare.name] = { name:rare.name, link:rare.link, respawn:rare.respawn };
+    });
+
+    RareDeath.find({ server:req.params.server }, function(err, rareDeaths) {
+      rareDeaths.forEach(function(rareDeath) {
+        raresMap[rareDeath.rare]['death'] = rareDeath.date;
+        var min = raresMap[rareDeath.rare]['respawn']['min'];
+        var max = raresMap[rareDeath.rare]['respawn']['max'];
+        min = rareDeath.date.getTime() + min * 60 * 60 * 1000;
+        max = rareDeath.date.getTime() + max * 60 * 60 * 1000;
+        raresMap[rareDeath.rare]['nextRespawn'] = { min: new Date(min), max: new Date(max) };
+      });
+
+      res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
+      res.end(JSON.stringify({server:req.params.server, rares:raresMap}));
+      return next();
+    });
+  });
 });
 
 server.get(/.*/, restify.serveStatic({
