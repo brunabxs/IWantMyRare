@@ -50,6 +50,49 @@ server.get('/rares/:server', function (req, res, next) {
   });
 });
 
+server.post('/servers', function (req, res, next) {
+  Server.remove({}, function (err) {
+    (new Server({name: 'Goldrinn'})).save();
+    (new Server({name: 'Azralon'})).save();
+
+    res.send(200);
+    return next();
+  });
+});
+
+server.get('/servers', function (req, res, next) {
+  Server.find({}, function (err, servers) {
+    res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
+    res.end(JSON.stringify({servers:servers}));
+    return next();
+  });
+});
+
+server.post('/rares', function (req, res, next) {
+  Rare.remove({}, function (err) {
+    (new Rare({name: "Nakk", link: "http://www.wowhead.com/npc=50990", respawn: {max: 24, min: 8}})).save();
+    (new Rare({name: "LukHok", link: "http://www.wowhead.com/npc=50981", respawn: {max: 24, min: 8}})).save();
+    (new Rare({name: "Gorok", link: "http://www.wowhead.com/npc=50992", respawn: {max: 24, min: 8}})).save();
+    (new Rare({name: "Nok-Karosh", link: "http://www.wowhead.com/npc=81001", respawn: {max: 24, min: 8}})).save();
+    (new Rare({name: "Poundfist", link: "http://www.wowhead.com/npc=50985", respawn: {max: 24, min: 8}})).save();
+    (new Rare({name: "Silthide", link: "http://www.wowhead.com/npc=51015", respawn: {max: 24, min: 8}})).save();
+    (new Rare({name: "Pathrunner", link: "http://www.wowhead.com/npc=50883", respawn: {max: 24, min: 8}})).save();
+    
+    RareDeath.remove({}, function (err) {
+      res.send(200);
+      return next();
+    });
+  });
+});
+
+server.get('/rares', function (req, res, next) {
+  Rare.find({}, function (err, rares) {
+    res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
+    res.end(JSON.stringify({rares:rares}));
+    return next();
+  });
+});
+
 server.get(/.*/, restify.serveStatic({
   directory: './public'
 }));
