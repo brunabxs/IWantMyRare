@@ -1,4 +1,5 @@
 var PORT = (process.env.PORT || 5000);
+var MONGODB_URL = (process.env.MONGOHQ_URL || 'mongodb://localhost/test');
 
 var restify = require('restify');
 var server = restify.createServer();
@@ -7,7 +8,7 @@ server.use(restify.fullResponse());
 server.use(restify.bodyParser());
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect(MONGODB_URL);
 
 var Server = mongoose.model('Server', mongoose.Schema({ name: String }));
 var Rare = mongoose.model('Rare', mongoose.Schema({ name: String, link: String, respawn: {min: Number, max: Number} }));
