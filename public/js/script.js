@@ -25,7 +25,7 @@ var updateRaresTable = function(server, callback) {
 
     jQuery.each(data.rares, function(index, rare) {
       var row = jQuery('<tr></tr>');
-      row.append('<td>' + '<a class="edit"></a>' + '</td>');
+      row.append('<td>' + '<a href="#" class="edit" onclick="openRareDialog(\'' + server + '\', \'' + rare.name + '\')"></a>' + '</td>');
       row.append('<td><a href="' + rare.link + '">' + rare.name + '</a></td>');
       row.append('<td>' + (dateFormat(rare.death) || '-') + '</td>');
       row.append('<td>' + rare.respawn.min + 'hrs ~ ' + rare.respawn.max + 'hrs</td>');
@@ -42,6 +42,12 @@ var updateRaresTable = function(server, callback) {
     
     callback();
   });
+};
+
+var openRareDialog = function(server, rare) {
+  jQuery('#rare-dialog *[name="server"]').val(server);
+  jQuery('#rare-dialog *[name="rare"]').val(rare);
+  jQuery('#rare-dialog').dialog('open');
 };
 
 jQuery(document).ready(function() {
@@ -65,6 +71,38 @@ jQuery(document).ready(function() {
           jQuery('#server-dialog').dialog('close');
           jQuery('#server-name, #rares').show();
         });
+      }
+    }
+  });
+
+  jQuery('#rare-dialog').dialog({
+    autoOpen: false,
+    height: 300,
+    width: 600,
+    modal: true,
+    closeOnEscape: true,
+    buttons: {
+      'Confirmar': function() {
+        var data = {};
+        data['date'] = jQuery(this).find('*[name=date]').val();
+        data['hour'] = jQuery(this).find('*[name=hour]').val();
+        data['server'] = jQuery(this).find('*[name=server]').val();
+        data['rare'] = jQuery(this).find('*[name=rare]').val();
+
+        jQuery.post('/rares/' + data.server + '/' + data.rare, {data: data})
+        .done(function(data) {
+          console.log(data);
+          updateRaresTable(jQuery('#server').val(), function() {
+            jQuery(this).find('*[name=date]').val('');
+            jQuery(this).find('*[name=hour]').val('');
+            jQuery(this).find('*[name=server]').val('');
+            jQuery(this).find('*[name=rare]').val('');
+            jQuery('#rare-dialog').dialog('close');
+          });
+        });
+      },
+      'Cancelar': function() {
+        jQuery('#rare-dialog').dialog('close');
       }
     }
   });

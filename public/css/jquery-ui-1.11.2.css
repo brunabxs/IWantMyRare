@@ -344,10 +344,10 @@ button.ui-button::-moz-focus-inner {
 .ui-widget-content {
 	border: 1px solid #1a0f08;
 	background: #2b1507;
-	color: #333333;
+	color: #F3F3F3;
 }
 .ui-widget-content a {
-	color: #333333;
+	color: #F3F3F3;
 }
 .ui-widget-header {
 	border: 1px solid #4d1a08;
@@ -356,7 +356,7 @@ button.ui-button::-moz-focus-inner {
 	font-weight: bold;
 }
 .ui-widget-header a {
-	color: #ffffff;
+	color: #F5EBD1;
 }
 
 /* Interaction states
@@ -730,11 +730,4 @@ button.ui-button::-moz-focus-inner {
 
 .ui-dialog-titlebar-close {
   display: none;
-}
-
-.ui-dialog select {
-  padding: 6px;
-  width: 100%;
-  background-color: #F5EBD1;
-  font-weight: normal;
 }

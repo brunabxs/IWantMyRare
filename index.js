@@ -13,6 +13,19 @@ var Server = mongoose.model('Server', mongoose.Schema({ name: String }));
 var Rare = mongoose.model('Rare', mongoose.Schema({ name: String, link: String, respawn: {min: Number, max: Number} }));
 var RareDeath = mongoose.model('RareDeath', mongoose.Schema({ server: String, rare: String, date: Date }));
 
+server.post('/rares/:server/:rare', function (req, res, next) {
+  RareDeath.findOne({ server:req.params.server, rare:req.params.rare }, function (err, rareDeath) {
+    if (rareDeath === null) {
+      rareDeath = new RareDeath({ server:req.params.server, rare:req.params.rare, date: new Date() });
+    }
+    rareDeath.date = new Date(req.params.data.date + ' ' + req.params.data.hour);
+    rareDeath.save(function(err) {
+      res.send(200);
+      return next();
+    });
+  });
+});
+
 server.get('/rares/:server', function (req, res, next) {
   Rare.find({}, function(err, rares) {
     var raresMap = {};

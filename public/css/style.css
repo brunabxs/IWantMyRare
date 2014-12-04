@@ -11,6 +11,7 @@ body {
   width: 940px;
   margin: 10px auto;
   background-color: #2b1507;
+  color: #F3F3F3;
 }
 
 a {
@@ -21,7 +22,6 @@ a {
   height: 300px;
   position: relative;
   background: transparent url('horde.png') no-repeat center right;
-  color: #F3F3F3;
   font-family: Georgia, Times, sans-serif;
 }
 #information a { color: #F3F3F3; }
@@ -65,4 +65,28 @@ table#rares tbody .edit {
   width: 16px;
   height: 16px;
   background-image: url('edit.png');
+}
+
+.ui-widget label,
+.ui-widget select,
+.ui-widget input {
+  display: block;
+  width: 100%;
+  font-weight: normal;
+}
+
+.ui-widget label {
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.ui-widget label:first-child {
+  margin-top: 0px;
+}
+
+.ui-widget select,
+.ui-widget input {
+  padding: 6px;
+  background-color: #F5EBD1;
+  border: 1px solid #CCC;
 }
