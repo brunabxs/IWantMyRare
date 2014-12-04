@@ -12,10 +12,14 @@ var numberFormat = function(number) {
 };
 
 var updateServers = function() {
-  jQuery('#server option').remove();
+  jQuery.get('/servers')
+  .done(function(data) {
+    jQuery('#server option').remove();
 
-  jQuery('#server').append('<option>Goldrinn</option>');
-  jQuery('#server').append('<option>Azralon</option>');
+    jQuery.each(data.servers, function(index, server) {
+      jQuery('#server').append('<option>' + server.name + '</option>');
+    });
+  });
 };
 
 var updateRaresTable = function(server, callback) {
