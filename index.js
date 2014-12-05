@@ -99,6 +99,6 @@ server.get(/.*/, restify.serveStatic({
   default: 'index.html'
 }));
 
-server.listen(PORT, '127.0.0.1', function() {
+server.listen(PORT, function() {
   console.log('%s listening at %s', server.name, server.url);
 });
