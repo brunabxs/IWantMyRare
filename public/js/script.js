@@ -94,9 +94,10 @@ jQuery(document).ready(function() {
         data['server'] = jQuery(this).find('*[name=server]').val();
         data['rare'] = jQuery(this).find('*[name=rare]').val();
 
+        ga('send', 'event', data.server + '-' + data.rare , 'updated');
+
         jQuery.post('/rares/' + data.server + '/' + data.rare, {data: data})
         .done(function(data) {
-          ga('send', 'event', data.server + '-' + data.rare , 'updated');
           updateRaresTable(jQuery('#server').val(), function() {
             jQuery(this).find('*[name=date]').val('');
             jQuery(this).find('*[name=hour]').val('');
