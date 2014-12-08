@@ -60,6 +60,7 @@ jQuery(document).ready(function() {
   jQuery('#server-name, #rares').hide();
 
   jQuery('#server-name a').click(function() {
+    ga('send', 'event', jQuery('#server').val(), 'changed');
     jQuery('#server-dialog').dialog('open');
   });
 
@@ -95,7 +96,7 @@ jQuery(document).ready(function() {
 
         jQuery.post('/rares/' + data.server + '/' + data.rare, {data: data})
         .done(function(data) {
-          console.log(data);
+          ga('send', 'event', data.server + '-' + data.rare , 'updated');
           updateRaresTable(jQuery('#server').val(), function() {
             jQuery(this).find('*[name=date]').val('');
             jQuery(this).find('*[name=hour]').val('');
